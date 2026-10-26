@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+
+  --background: var(--brand-black);
+  --surface: #0a0a0a;
+  --surface-muted: #161616;
+  --border: #2e2e2e;
+  --text: #f5f5f5;
+  --text-muted: #a3a3a3;
+
+  --header: var(--brand-black);
+  --header-text: var(--brand-white);
+  --accent: var(--brand-white);
+  --accent-text: var(--brand-black);
+  --focus: var(--brand-white);
+  --link: var(--brand-white);
+
+  /* Colour is reserved for status. Everything else stays black and white. */
+  --money-in: #4ade80;
+  --positive: #4ade80;
+  --positive-surface: #0b1a10;
+  --warning: #f5b84b;
+  --warning-surface: #1f1608;
+  --danger: #ff7a59;
+  --danger-surface: #22100a;
+  --info: #d4d4d4;
+  --info-surface: #1c1c1c;
+
+  --chart-bar: var(--brand-white);
+  --chart-bar-muted: #5c5c5c;
+  --chart-grid: #1f1f1f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-header: var(--header);
+  --color-header-text: var(--header-text);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-focus: var(--focus);
+  --color-link: var(--link);
+  --color-money-in: var(--money-in);
+  --color-positive: var(--positive);
+  --color-positive-surface: var(--positive-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
+  --color-chart-bar: var(--chart-bar);
+  --color-chart-bar-muted: var(--chart-bar-muted);
+  --color-chart-grid: var(--chart-grid);
+  --font-sans: var(--font-barlow);
+
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+@media (width < 40rem) {
+  html {
+    scroll-padding-bottom: 5rem;
+  }
+}
+
+.text-link {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
