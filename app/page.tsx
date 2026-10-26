@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { KpiCards, KpiCardsSkeleton } from "@/components/dashboard/kpi-cards";
 import { MonthPicker } from "@/components/ui/month-picker";
@@ -10,6 +11,7 @@ async function Overview({
   searchParams,
 }: Pick<PageProps<"/">, "searchParams">) {
   const { month } = await searchParams;
+  await connection();
   const data = getDemoData(today());
   const periods = availablePeriods(data);
   const period = resolveMonth(month, periods);
