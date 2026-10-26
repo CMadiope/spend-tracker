@@ -14,15 +14,18 @@ export function ChartCard({
   children,
 }: ChartCardProps) {
   return (
-    <section className="flex flex-col gap-4 border border-border bg-surface p-4">
+    <section className="group/card flex flex-col gap-4 border border-border bg-surface p-4">
       <header>
         <h2 className="font-semibold">{title}</h2>
         <p className="text-sm text-muted">{subtitle}</p>
       </header>
-      <div aria-hidden>{children}</div>
-      <details className="text-sm">
+      <div aria-hidden className="group-has-[details[open]]/card:hidden">
+        {children}
+      </div>
+      <details className="group/table text-sm">
         <summary className="cursor-pointer text-muted hover:text-text">
-          Show as table
+          <span className="group-open/table:hidden">Show as table</span>
+          <span className="hidden group-open/table:inline">Show as chart</span>
         </summary>
         <table className="mt-3 w-full">
           <caption className="sr-only">
