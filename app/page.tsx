@@ -1,7 +1,3 @@
-export default function Home() {
-  return (
-    <main>
-      <div>Hello world!</div>
-    </main>
-  );
+export default function OverviewPage() {
+  return <h1 className="text-2xl font-semibold">Overview</h1>;
 }

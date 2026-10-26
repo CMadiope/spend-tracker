@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import Home from "./page";
+import OverviewPage from "./page";
 
-test("renders the home page", () => {
-  render(<Home />);
-  expect(screen.getByRole("main")).toBeInTheDocument();
+test("renders the overview heading", () => {
+  render(<OverviewPage />);
+  expect(
+    screen.getByRole("heading", { level: 1, name: "Overview" }),
+  ).toBeInTheDocument();
 });
