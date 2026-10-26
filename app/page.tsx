@@ -1,11 +1,17 @@
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { CategoryBars } from "@/components/charts/category-bars";
+import { TrendChart } from "@/components/charts/trend-chart";
 import { KpiCards, KpiCardsSkeleton } from "@/components/dashboard/kpi-cards";
 import { MonthPicker } from "@/components/ui/month-picker";
 import { today } from "@/lib/dates/clock";
 import { availablePeriods, getDemoData } from "@/lib/data/repository";
 import { resolveMonth } from "@/lib/params/month";
-import { summarisePeriod } from "@/lib/spending/spending";
+import {
+  categoryBreakdown,
+  spendingTrend,
+  summarisePeriod,
+} from "@/lib/spending/spending";
 
 async function Overview({
   searchParams,
@@ -22,6 +28,15 @@ async function Overview({
       <section aria-label="Key figures">
         <KpiCards summary={summarisePeriod(data.transactions, period)} />
       </section>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <TrendChart
+          points={spendingTrend(data.transactions, periods)}
+          selected={period}
+        />
+        <CategoryBars
+          categories={categoryBreakdown(data.transactions, period)}
+        />
+      </div>
     </div>
   );
 }

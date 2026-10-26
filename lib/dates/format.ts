@@ -7,6 +7,11 @@ const monthYear = new Intl.DateTimeFormat("en-ZA", {
   timeZone: "UTC",
 });
 
+const shortMonth = new Intl.DateTimeFormat("en-ZA", {
+  month: "short",
+  timeZone: "UTC",
+});
+
 const dayMonth = new Intl.DateTimeFormat("en-ZA", {
   day: "numeric",
   month: "short",
@@ -22,6 +27,10 @@ const weekdayDayMonth = new Intl.DateTimeFormat("en-ZA", {
 
 export function formatPeriod(period: string): string {
   return monthYear.format(toUtcDate(periodStart(period)));
+}
+
+export function formatShortMonth(period: string): string {
+  return shortMonth.format(toUtcDate(periodStart(period)));
 }
 
 export function formatDayMonth(date: string): string {
