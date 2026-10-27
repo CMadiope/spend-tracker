@@ -40,6 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# claude code
+/.claude/settings.json
+
 # personal build notes
 /notes/
 /docs/PROJECT_PLAN.md
+
+# playwright
+/playwright-report/
+/test-results/
