@@ -5,7 +5,11 @@ import type {
   ScheduledItem,
   Transaction,
 } from "@/interfaces/domain";
-import { parseIsoDate, previousBusinessDay } from "@/lib/dates/calendar";
+import {
+  addDays,
+  parseIsoDate,
+  previousBusinessDay,
+} from "@/lib/dates/calendar";
 import {
   clampToPeriod,
   periodEnd,
@@ -86,10 +90,7 @@ function spreadDays(count: number, lastDay: number, offset: number): number[] {
   );
 }
 
-function scheduledItems(
-  firstPeriod: string,
-  currentPeriod: string,
-): ScheduledItem[] {
+function scheduledItems(firstPeriod: string, today: string): ScheduledItem[] {
   const startDate = periodStart(firstPeriod);
   const monthly = (day: number) => ({
     kind: "monthly" as const,
@@ -153,8 +154,8 @@ function scheduledItems(
       description: "Car service",
       amountCents: 380_000,
       category: "transport",
-      rule: { kind: "once", date: clampToPeriod(currentPeriod, 27) },
-      startDate: periodStart(currentPeriod),
+      rule: { kind: "once", date: addDays(today, 3) },
+      startDate: addDays(today, 3),
       active: true,
     },
   ];
@@ -252,7 +253,7 @@ function categoryTransactions(
 export function createDemoData(today: string): DemoData {
   const current = periodOf(today);
   const periods = [shiftPeriod(current, -2), shiftPeriod(current, -1), current];
-  const items = scheduledItems(periods[0], current);
+  const items = scheduledItems(periods[0], today);
   const todayDay = parseIsoDate(today)!.day;
 
   const transactions: Transaction[] = [];
