@@ -77,11 +77,12 @@ function splitCents(total: number, parts: number): number[] {
   return amounts;
 }
 
-function spreadDays(count: number, lastDay: number): number[] {
-  if (count === 1) return [lastDay];
-  return Array.from(
-    { length: count },
-    (_, i) => 1 + Math.round((i * (lastDay - 1)) / (count - 1)),
+function spreadDays(count: number, lastDay: number, offset: number): number[] {
+  return Array.from({ length: count }, (_, i) =>
+    Math.min(
+      Math.max(Math.round(((i + 1) * lastDay) / count) - offset, 1),
+      lastDay,
+    ),
   );
 }
 
@@ -205,14 +206,12 @@ function categoryTransactions(
   const transactions: Transaction[] = [];
   const percents = MONTHLY_PERCENT_OF_BUDGET[monthIndex];
 
-  for (const [category, merchants] of Object.entries(MERCHANTS) as [
-    ExpenseCategory,
-    Merchant[],
-  ][]) {
+  const entries = Object.entries(MERCHANTS) as [ExpenseCategory, Merchant[]][];
+  for (const [index, [category, merchants]] of entries.entries()) {
     const total =
       ((CATEGORY_BUDGETS[category] ?? 0) * (percents[category] ?? 0)) / 100;
     const amounts = splitCents(total, merchants.length);
-    const days = spreadDays(merchants.length, lastDay);
+    const days = spreadDays(merchants.length, lastDay, index);
     merchants.forEach(({ merchant, description }, i) => {
       transactions.push({
         id: `${period}-${category}-${i + 1}`,

@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { CategoryBars } from "@/components/charts/category-bars";
 import { TrendChart } from "@/components/charts/trend-chart";
 import { KpiCards, KpiCardsSkeleton } from "@/components/dashboard/kpi-cards";
+import { TransactionList } from "@/components/transactions/transaction-list";
 import { MonthPicker } from "@/components/ui/month-picker";
 import { today } from "@/lib/dates/clock";
 import { availablePeriods, getDemoData } from "@/lib/data/repository";
@@ -12,6 +14,7 @@ import {
   spendingTrend,
   summarisePeriod,
 } from "@/lib/spending/spending";
+import { filterTransactions } from "@/lib/transactions/filter";
 
 async function Overview({
   searchParams,
@@ -37,6 +40,28 @@ async function Overview({
           categories={categoryBreakdown(data.transactions, period)}
         />
       </div>
+      <section
+        aria-labelledby="recent-heading"
+        className="border border-border bg-surface p-4"
+      >
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 id="recent-heading" className="font-semibold">
+            Recent transactions
+          </h2>
+          <Link
+            href={`/transactions?month=${period}`}
+            className="text-link text-sm"
+          >
+            View all
+          </Link>
+        </div>
+        <TransactionList
+          transactions={filterTransactions(data.transactions, period, {}).slice(
+            0,
+            5,
+          )}
+        />
+      </section>
     </div>
   );
 }
