@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/CMadiope/spend-tracker/actions/workflows/ci.yml/badge.svg?event=pull_request)](https://github.com/CMadiope/spend-tracker/actions/workflows/ci.yml)
 
+**Live demo:** <https://spend-tracker-nine-gray.vercel.app/>
+
 A customer spending insights dashboard built with Next.js 16. It answers three questions:
 
 1. Where did my money go?
