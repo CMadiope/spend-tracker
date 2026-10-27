@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow } from "next/font/google";
+import localFont from "next/font/local";
 import { Suspense } from "react";
 import { AppNav } from "@/components/shell/app-nav";
 import {
@@ -8,9 +8,13 @@ import {
 } from "@/components/shell/header-status";
 import "./globals.css";
 
-const barlow = Barlow({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
+const barlow = localFont({
+  src: [
+    { path: "./fonts/barlow-latin-400-normal.woff2", weight: "400" },
+    { path: "./fonts/barlow-latin-500-normal.woff2", weight: "500" },
+    { path: "./fonts/barlow-latin-600-normal.woff2", weight: "600" },
+    { path: "./fonts/barlow-latin-700-normal.woff2", weight: "700" },
+  ],
   variable: "--font-barlow",
 });
 
