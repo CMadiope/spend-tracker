@@ -103,9 +103,10 @@ export function ScheduledItems({
                 <button
                   type="button"
                   onClick={() => setEditing(item.id)}
+                  aria-label={`Edit, ${item.description}`}
                   className="text-link text-sm"
                 >
-                  Edit<span className="sr-only">, {item.description}</span>
+                  Edit
                 </button>
                 <button
                   type="button"
@@ -116,10 +117,10 @@ export function ScheduledItems({
                       ),
                     )
                   }
+                  aria-label={`${item.active ? "Pause" : "Resume"}, ${item.description}`}
                   className="text-link text-sm"
                 >
                   {item.active ? "Pause" : "Resume"}
-                  <span className="sr-only">, {item.description}</span>
                 </button>
               </div>
             </li>

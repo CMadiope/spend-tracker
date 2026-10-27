@@ -46,3 +46,7 @@ next-env.d.ts
 # personal build notes
 /notes/
 /docs/PROJECT_PLAN.md
+
+# playwright
+/playwright-report/
+/test-results/

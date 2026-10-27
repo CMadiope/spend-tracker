@@ -75,17 +75,19 @@ export function AlertList({
                   <button
                     type="button"
                     onClick={() => onRead(alert.key)}
+                    aria-label={`Mark read, ${name}`}
                     className="text-link"
                   >
-                    Mark read<span className="sr-only">, {name}</span>
+                    Mark read
                   </button>
                 )}
                 <button
                   type="button"
                   onClick={() => onDismiss(alert.key)}
+                  aria-label={`Dismiss, ${name}`}
                   className="text-link"
                 >
-                  Dismiss<span className="sr-only">, {name}</span>
+                  Dismiss
                 </button>
               </span>
             </div>
