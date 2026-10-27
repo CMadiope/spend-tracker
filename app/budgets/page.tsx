@@ -7,6 +7,7 @@ import {
 } from "@/components/budgets/budgets-view";
 import { MonthPicker } from "@/components/ui/month-picker";
 import { today } from "@/lib/dates/clock";
+import { periodOf } from "@/lib/dates/period";
 import { availablePeriods, getDemoData } from "@/lib/data/repository";
 import { resolveMonth } from "@/lib/params/month";
 import { transactionsInPeriod } from "@/lib/spending/spending";
@@ -18,7 +19,8 @@ async function Budgets({
 }: Pick<PageProps<"/budgets">, "searchParams">) {
   const { month } = await searchParams;
   await connection();
-  const data = getDemoData(today());
+  const todayDate = today();
+  const data = getDemoData(todayDate);
   const periods = availablePeriods(data);
   const period = resolveMonth(month, periods);
 
@@ -28,6 +30,7 @@ async function Budgets({
       <BudgetsView
         key={period}
         period={period}
+        isPastMonth={period < periodOf(todayDate)}
         seedBudgets={data.budgets}
         transactions={transactionsInPeriod(data.transactions, period)}
       />

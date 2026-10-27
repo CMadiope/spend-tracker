@@ -11,6 +11,7 @@ import {
   useStoredState,
 } from "@/lib/store/store";
 import { statusDisplay } from "@/components/budgets/status-chip";
+import { formatPeriod } from "@/lib/dates/format";
 import { AlertList, alertName } from "./alert-list";
 
 interface AlertBellProps {
@@ -97,7 +98,12 @@ export function AlertBell({
         className="fixed inset-auto top-14 right-4 m-0 max-h-[70dvh] w-[min(26rem,calc(100vw-2rem))] overflow-y-auto border border-border bg-surface p-4 text-text"
       >
         <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
-          <h2 className="font-semibold">Budget alerts</h2>
+          <h2 className="font-semibold">
+            Budget alerts
+            <span className="block text-xs font-normal text-muted">
+              {formatPeriod(period)}
+            </span>
+          </h2>
           {unread.length > 0 && (
             <button
               type="button"

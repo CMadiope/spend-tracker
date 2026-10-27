@@ -10,6 +10,7 @@ import { BudgetForm } from "./budget-form";
 
 interface BudgetsViewProps {
   period: string;
+  isPastMonth: boolean;
   seedBudgets: MonthlyBudget[];
   transactions: Transaction[];
 }
@@ -29,6 +30,7 @@ export function BudgetsSkeleton() {
 
 export function BudgetsView({
   period,
+  isPastMonth,
   seedBudgets,
   transactions,
 }: BudgetsViewProps) {
@@ -57,6 +59,12 @@ export function BudgetsView({
 
   return (
     <div className="flex flex-col gap-6">
+      {isPastMonth && (
+        <p className="bg-info-surface px-4 py-3 text-sm text-info">
+          This month has ended. Changes here update the budget cards, but alerts
+          only cover the current month.
+        </p>
+      )}
       <div className="flex items-center justify-between gap-4">
         <p role="status" className="text-sm text-positive">
           {message}
