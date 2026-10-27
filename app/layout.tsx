@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Barlow } from "next/font/google";
+import { Suspense } from "react";
 import { AppNav } from "@/components/shell/app-nav";
+import {
+  HeaderStatus,
+  HeaderStatusFallback,
+} from "@/components/shell/header-status";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -34,9 +39,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <span className="font-semibold text-header-text md:invisible">
                 Spend Tracker
               </span>
-              <span className="border border-border px-2 py-0.5 text-xs font-medium tracking-wide text-muted uppercase">
-                Demo data
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="border border-border px-2 py-0.5 text-xs font-medium tracking-wide text-muted uppercase">
+                  Demo data
+                </span>
+                <Suspense fallback={<HeaderStatusFallback />}>
+                  <HeaderStatus />
+                </Suspense>
+              </div>
             </header>
             <main id="main" className="flex-1 px-4 pt-6 pb-24 md:px-8 md:pb-8">
               {children}
