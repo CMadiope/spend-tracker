@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { MonthlyBudget, Transaction } from "@/interfaces/domain";
 import { periodBudgetUsage } from "@/lib/budgets/status";
 import { resolveBudget } from "@/lib/store/merge";
@@ -35,6 +35,20 @@ export function BudgetsView({
   const stored = useStoredState();
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState("");
+  const loaded = stored !== null;
+
+  useEffect(() => {
+    if (!loaded) return;
+    const focusHashTarget = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      const card = id ? document.getElementById(id) : null;
+      card?.scrollIntoView({ block: "start" });
+      card?.focus({ preventScroll: true });
+    };
+    focusHashTarget();
+    window.addEventListener("hashchange", focusHashTarget);
+    return () => window.removeEventListener("hashchange", focusHashTarget);
+  }, [loaded]);
 
   if (!stored) return <BudgetsSkeleton />;
 

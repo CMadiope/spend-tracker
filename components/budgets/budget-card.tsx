@@ -17,7 +17,7 @@ export function BudgetCard({ usage }: { usage: BudgetUsage }) {
     <article
       id={budgetCardId(usage.scope)}
       tabIndex={-1}
-      className="flex scroll-mt-6 flex-col gap-3 border border-border bg-surface p-4"
+      className="flex scroll-mt-6 flex-col gap-3 border border-border bg-surface p-4 focus:outline-2 focus:outline-offset-2 focus:outline-focus"
     >
       <header className="flex items-start justify-between gap-3">
         <h3 className="font-semibold">{name}</h3>
