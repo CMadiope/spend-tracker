@@ -33,10 +33,7 @@ export function SpendSplit({
         </div>
       )}
       <div className="flex flex-col gap-1.5">
-        <p className="flex justify-between gap-3 text-sm">
-          <span className="text-muted">Money out</span>
-          <span className="tabular-nums">{formatCents(moneyOut)}</span>
-        </p>
+        <p className="text-sm text-muted">Money out</p>
         <div aria-hidden className="flex h-2 gap-0.5 bg-chart-grid">
           {budgetedCents > 0 && (
             <div
