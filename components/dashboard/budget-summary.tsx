@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { alertName } from "@/components/alerts/alert-list";
+import { BudgetRing } from "@/components/budgets/budget-ring";
 import { SpendSplit } from "@/components/budgets/spend-split";
 import { StatusChip } from "@/components/budgets/status-chip";
 import type { MonthlyBudget, Transaction } from "@/interfaces/domain";
@@ -71,19 +72,19 @@ function BudgetSummaryBody({
 
   return (
     <>
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-sm text-muted">
-          {overall.percentUsed !== null
-            ? `${overall.percentUsed}% of your budget used`
-            : "No overall budget set"}
-        </p>
-        <StatusChip status={overall.status} />
+      <div className="flex flex-col items-center gap-4 sm:flex-row">
+        <BudgetRing usage={overall} />
+        <div className="flex w-full flex-col gap-3">
+          <div className="self-start">
+            <StatusChip status={overall.status} />
+          </div>
+          <SpendSplit
+            budgetCents={overall.budgetCents}
+            budgetedCents={groups.budgetedCents}
+            unbudgetedCents={groups.unbudgetedCents}
+          />
+        </div>
       </div>
-      <SpendSplit
-        budgetCents={overall.budgetCents}
-        budgetedCents={groups.budgetedCents}
-        unbudgetedCents={groups.unbudgetedCents}
-      />
       <div>
         <h3 className="mb-2 text-sm text-muted">Active alerts</h3>
         {alerts.length === 0 ? (
