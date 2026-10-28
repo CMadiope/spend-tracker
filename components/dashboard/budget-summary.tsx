@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { alertName } from "@/components/alerts/alert-list";
+import { SpendSplit } from "@/components/budgets/spend-split";
 import { StatusChip } from "@/components/budgets/status-chip";
 import type { MonthlyBudget, Transaction } from "@/interfaces/domain";
 import { deriveAlerts, visibleAlerts } from "@/lib/alerts/alerts";
+import { budgetGroups } from "@/lib/budgets/insights";
 import { periodBudgetUsage } from "@/lib/budgets/status";
-import { formatCents } from "@/lib/money/format";
 import { resolveBudget } from "@/lib/store/merge";
 import { useStoredState } from "@/lib/store/store";
 
@@ -30,7 +31,7 @@ export function BudgetSummary({
     >
       <div className="flex items-baseline justify-between gap-4">
         <h2 id="budget-summary-heading" className="font-semibold">
-          Budget
+          Track my spend
         </h2>
         <Link href={`/budgets?month=${period}`} className="text-link text-sm">
           Manage budgets
@@ -62,6 +63,7 @@ function BudgetSummaryBody({
   alertState: Parameters<typeof visibleAlerts>[1];
 }) {
   const { overall } = periodBudgetUsage(budget, transactions, period);
+  const groups = budgetGroups(budget, transactions, period);
   const alerts = visibleAlerts(
     deriveAlerts(budget, transactions, period),
     alertState,
@@ -69,17 +71,19 @@ function BudgetSummaryBody({
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-muted">
-          <span className="text-lg font-semibold text-text">
-            {formatCents(overall.spentCents)}
-          </span>
-          {overall.budgetCents
-            ? ` of ${formatCents(overall.budgetCents)} · ${overall.percentUsed}% used`
-            : " spent"}
+          {overall.percentUsed !== null
+            ? `${overall.percentUsed}% of your budget used`
+            : "No overall budget set"}
         </p>
         <StatusChip status={overall.status} />
       </div>
+      <SpendSplit
+        budgetCents={overall.budgetCents}
+        budgetedCents={groups.budgetedCents}
+        unbudgetedCents={groups.unbudgetedCents}
+      />
       <div>
         <h3 className="mb-2 text-sm text-muted">Active alerts</h3>
         {alerts.length === 0 ? (
