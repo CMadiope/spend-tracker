@@ -1,16 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { MonthlyBudget, Transaction } from "@/interfaces/domain";
+import type {
+  ExpenseCategory,
+  MonthlyBudget,
+  Transaction,
+} from "@/interfaces/domain";
+import { budgetGroups } from "@/lib/budgets/insights";
 import { periodBudgetUsage } from "@/lib/budgets/status";
 import { resolveBudget } from "@/lib/store/merge";
 import { saveBudget, useStoredState } from "@/lib/store/store";
 import { BudgetCard } from "./budget-card";
 import { BudgetForm } from "./budget-form";
+import { BudgetGroupsCard } from "./budget-groups-card";
 
 interface BudgetsViewProps {
   period: string;
   isPastMonth: boolean;
+  averages: Partial<Record<ExpenseCategory, number>>;
   seedBudgets: MonthlyBudget[];
   transactions: Transaction[];
 }
@@ -31,6 +38,7 @@ export function BudgetsSkeleton() {
 export function BudgetsView({
   period,
   isPastMonth,
+  averages,
   seedBudgets,
   transactions,
 }: BudgetsViewProps) {
@@ -86,6 +94,7 @@ export function BudgetsView({
         <BudgetForm
           period={period}
           budget={budget}
+          averages={averages}
           onSave={(next) => {
             saveBudget(next);
             setEditing(false);
@@ -96,6 +105,10 @@ export function BudgetsView({
       )}
 
       <BudgetCard usage={usage.overall} />
+      <BudgetGroupsCard
+        budgetCents={usage.overall.budgetCents}
+        groups={budgetGroups(budget, transactions, period)}
+      />
       <section aria-labelledby="category-budgets-heading">
         <h2
           id="category-budgets-heading"

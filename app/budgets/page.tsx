@@ -6,6 +6,7 @@ import {
   BudgetsView,
 } from "@/components/budgets/budgets-view";
 import { MonthPicker } from "@/components/ui/month-picker";
+import { averageSpend } from "@/lib/budgets/insights";
 import { today } from "@/lib/dates/clock";
 import { periodOf } from "@/lib/dates/period";
 import { availablePeriods, getDemoData } from "@/lib/data/repository";
@@ -31,6 +32,10 @@ async function Budgets({
         key={period}
         period={period}
         isPastMonth={period < periodOf(todayDate)}
+        averages={averageSpend(
+          data.transactions,
+          periods.filter((p) => p < period),
+        )}
         seedBudgets={data.budgets}
         transactions={transactionsInPeriod(data.transactions, period)}
       />
