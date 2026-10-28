@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { MonthlyBudget } from "@/interfaces/domain";
+import type { ExpenseCategory, MonthlyBudget } from "@/interfaces/domain";
 import {
   type BudgetFormValues,
   allocatedCents,
@@ -15,6 +15,7 @@ import { formatCents } from "@/lib/money/format";
 interface BudgetFormProps {
   period: string;
   budget: MonthlyBudget | undefined;
+  averages?: Partial<Record<ExpenseCategory, number>>;
   onSave: (budget: MonthlyBudget) => void;
   onCancel: () => void;
 }
@@ -35,6 +36,7 @@ function initialValues(budget: MonthlyBudget | undefined): BudgetFormValues {
 export function BudgetForm({
   period,
   budget,
+  averages = {},
   onSave,
   onCancel,
 }: BudgetFormProps) {
@@ -63,6 +65,24 @@ export function BudgetForm({
     onSave(result.budget);
   }
 
+  function setField(name: keyof BudgetFormValues, value: string) {
+    setValues((v) => ({ ...v, [name]: value }));
+    setErrors((current) => ({ ...current, [name]: undefined }));
+  }
+
+  function applyAverages() {
+    for (const category of expenseCategories) {
+      const average = averages[category];
+      if (average !== undefined) setField(category, centsToInput(average));
+    }
+  }
+
+  function categoryHint(category: ExpenseCategory) {
+    const average = averages[category];
+    if (average === undefined) return "Leave blank for none";
+    return `On average you spend ${formatCents(average)}`;
+  }
+
   function field(name: keyof BudgetFormValues, label: string, hint?: string) {
     const error = errors[name];
     const describedBy = [error && `${name}-error`, hint && `${name}-hint`]
@@ -79,10 +99,7 @@ export function BudgetForm({
           inputMode="decimal"
           autoComplete="off"
           value={values[name]}
-          onChange={(e) => {
-            setValues((v) => ({ ...v, [name]: e.target.value }));
-            setErrors((current) => ({ ...current, [name]: undefined }));
-          }}
+          onChange={(e) => setField(name, e.target.value)}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy || undefined}
           className={`border bg-background px-3 py-2 text-text ${error ? "border-danger" : "border-border"}`}
@@ -91,6 +108,16 @@ export function BudgetForm({
           <span id={`${name}-hint`} className="text-xs text-muted">
             {hint}
           </span>
+        )}
+        {name !== "total" && averages[name] !== undefined && (
+          <button
+            type="button"
+            onClick={() => setField(name, centsToInput(averages[name]))}
+            aria-label={`Use average for ${label}`}
+            className="text-link self-start text-xs"
+          >
+            Use average
+          </button>
         )}
         {error && (
           <span id={`${name}-error`} className="text-xs text-danger">
@@ -117,9 +144,21 @@ export function BudgetForm({
         <legend className="mb-2 text-sm font-medium">
           Category budgets (R)
         </legend>
+        {Object.keys(averages).length > 0 && (
+          <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+            <p>Suggested limits are your average spend in earlier months.</p>
+            <button
+              type="button"
+              onClick={applyAverages}
+              className="border border-border px-3 py-1.5 font-medium text-text"
+            >
+              Set all to average
+            </button>
+          </div>
+        )}
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {expenseCategories.map((category) =>
-            field(category, categoryLabels[category], "Leave blank for none"),
+            field(category, categoryLabels[category], categoryHint(category)),
           )}
         </div>
       </fieldset>

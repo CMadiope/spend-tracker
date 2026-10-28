@@ -18,13 +18,13 @@ All data is **synthetic demo data** for a South African cheque account (ZAR, `en
 
 ## Features
 
-| Page         | What it does                                                                                                                                                           |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Overview     | Income, net expenses, net cash flow and savings rate; budget summary with active alerts; month-end estimate; spending trend; spending by category; recent transactions |
-| Transactions | Filter by month, category and type; search by description or merchant                                                                                                  |
-| Budgets      | Overall and per-category budgets with usage, remaining or overspend, and status; edit form with inline validation for the current month; past months are read-only     |
-| Forecast     | Current balance, projected month-end balance, timeline with running balance, negative-balance warning; add, edit and pause scheduled items                             |
-| Alerts       | Bell with unread count; alert panel with mark read, dismiss and a link to the budget                                                                                   |
+| Page         | What it does                                                                                                                                                                                                                                                                           |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Overview     | Income, net expenses (compared with last month), net cash flow and savings rate; a Track my spend card (budget ring, money out split into budgeted and unbudgeted spend, active alerts); month-end estimate; spending by category; recent transactions                                 |
+| Transactions | Filter by month, category and type; search by description or merchant                                                                                                                                                                                                                  |
+| Budgets      | Overall and per-category budgets with usage, remaining or overspend, and status; budget groups showing spend you planned for and didn't; suggested limits from your average spend in earlier months; edit form with inline validation for the current month; past months are read-only |
+| Forecast     | Current balance, projected month-end balance, timeline with running balance, negative-balance warning; add, edit and pause scheduled items                                                                                                                                             |
+| Alerts       | Bell with unread count; alert panel with mark read, dismiss and a link to the budget                                                                                                                                                                                                   |
 
 ## Quick start with Docker
 
