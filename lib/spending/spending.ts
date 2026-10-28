@@ -70,13 +70,3 @@ export function categoryBreakdown(
       (a, b) => b.netCents - a.netCents || a.category.localeCompare(b.category),
     );
 }
-
-export function spendingTrend(
-  transactions: readonly Transaction[],
-  periods: readonly string[],
-): { period: string; netExpensesCents: number }[] {
-  return periods.map((period) => ({
-    period,
-    netExpensesCents: summarisePeriod(transactions, period).netExpensesCents,
-  }));
-}
