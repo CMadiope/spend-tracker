@@ -22,7 +22,7 @@ All data is **synthetic demo data** for a South African cheque account (ZAR, `en
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Overview     | Income, net expenses, net cash flow and savings rate; budget summary with active alerts; month-end estimate; spending trend; spending by category; recent transactions |
 | Transactions | Filter by month, category and type; search by description or merchant                                                                                                  |
-| Budgets      | Overall and per-category budgets with usage, remaining or overspend, and status; edit form with inline validation                                                      |
+| Budgets      | Overall and per-category budgets with usage, remaining or overspend, and status; edit form with inline validation for the current month; past months are read-only     |
 | Forecast     | Current balance, projected month-end balance, timeline with running balance, negative-balance warning; add, edit and pause scheduled items                             |
 | Alerts       | Bell with unread count; alert panel with mark read, dismiss and a link to the budget                                                                                   |
 
@@ -118,7 +118,7 @@ projectedBalance = currentBalance + Σ scheduled income − Σ debit orders − 
                    for occurrences with today < date ≤ end of the selected month
 ```
 
-- Available for the current and next two months; past months link to their actual transactions.
+- Available for the current and next two months; past months link to their actual transactions and hide the scheduled items, which only affect the future.
 - An occurrence counts only if the item is active and the date is within its start and end dates.
 - Days 29–31 move to the last day of shorter months. Salary set to "Friday if a weekend" moves from Saturday or Sunday back to Friday.
 - On the same day, income comes before outflows, then larger amounts, then by id, so the result does not depend on input order.

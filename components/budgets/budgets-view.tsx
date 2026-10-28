@@ -61,15 +61,14 @@ export function BudgetsView({
     <div className="flex flex-col gap-6">
       {isPastMonth && (
         <p className="bg-info-surface px-4 py-3 text-sm text-info">
-          This month has ended. Changes here update the budget cards, but alerts
-          only cover the current month.
+          This month has ended, so its budgets are read-only.
         </p>
       )}
       <div className="flex items-center justify-between gap-4">
         <p role="status" className="text-sm text-positive">
           {message}
         </p>
-        {!editing && (
+        {!editing && !isPastMonth && (
           <button
             type="button"
             onClick={() => {
