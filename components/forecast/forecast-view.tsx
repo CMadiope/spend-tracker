@@ -130,16 +130,22 @@ export function ForecastView({
             className="text-link text-text"
           >
             see actuals
+          </Link>{" "}
+          or{" "}
+          <Link href="/forecast" className="text-link text-text">
+            view this month&apos;s forecast
           </Link>
           .
         </p>
       )}
 
-      <ScheduledItems
-        items={items}
-        today={today}
-        onChange={saveScheduledItems}
-      />
+      {forecast.available && (
+        <ScheduledItems
+          items={items}
+          today={today}
+          onChange={saveScheduledItems}
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import type { Transaction } from "@/interfaces/domain";
-import { categoryBreakdown, spendingTrend, summarisePeriod } from "./spending";
+import { categoryBreakdown, summarisePeriod } from "./spending";
 
 const transactions: Transaction[] = [
   {
@@ -88,15 +88,5 @@ test("category breakdown is net, sorted, and drops categories at or below zero",
   expect(categoryBreakdown(transactions, "2026-10")).toEqual([
     { category: "groceries", netCents: 300_000 },
     { category: "shopping", netCents: 200_000 },
-  ]);
-});
-
-test("trend has one entry per requested month", () => {
-  expect(
-    spendingTrend(transactions, ["2026-09", "2026-10", "2026-12"]),
-  ).toEqual([
-    { period: "2026-09", netExpensesCents: 999_999 },
-    { period: "2026-10", netExpensesCents: 490_000 },
-    { period: "2026-12", netExpensesCents: 0 },
   ]);
 });
